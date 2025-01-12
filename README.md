@@ -2,6 +2,8 @@
 
 Web sitelerinin ekran görüntüsünü alabileceğiniz hızlı bir REST API servisi.
 
+![image](https://github.com/user-attachments/assets/7f7bd6d2-c8fd-458b-9f9b-ee35a447dd1e)
+
 ## ✨ Özellikler
 
 - 🌐 Herhangi bir web sitesinin ekran görüntüsünü alabilme
