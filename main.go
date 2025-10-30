@@ -2,26 +2,34 @@ package main
 
 import (
 	"log"
+	"time"
 
+	"github.com/codedByCan/Go_Screenshot_API/controllers/api"
+	"github.com/codedByCan/Go_Screenshot_API/middleware"
 	"github.com/gin-gonic/gin"
-	"speedapi/controllers/api"
 )
 
-func setupRouter() *gin.Engine {
-	gin.SetMode(gin.ReleaseMode)
-	r := gin.New()
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
-	apiGroup := r.Group("/api/v1")
-	{
-		apiGroup.POST("/screenshot", api.HandleScreenshot)
-	}
-	return r
-}
-
 func main() {
-	router := setupRouter()
-	if err := router.Run(":3000"); err != nil {
-		log.Fatalf("Sunucu başlatılamadı: %v", err)
+	r := gin.Default()
+
+	r.Use(gin.Recovery())
+
+	r.Use(middleware.CORSMiddleware())
+
+	v1 := r.Group("/api/v1")
+	{
+		v1.POST("/screenshot", api.HandleScreenshot)
+	}
+
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"status": "ok",
+			"time":   time.Now().Format(time.RFC3339),
+		})
+	})
+
+	log.Println("🚀 Server starting on :8080")
+	if err := r.Run(":8080"); err != nil {
+		log.Fatal("Server başlatılamadı:", err)
 	}
 }
