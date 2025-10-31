@@ -108,6 +108,26 @@ Go_Screenshot_API/
 └── README.md                    # Dokümantasyon
 ```
 
+## 📊 HEALTHCHECK Akışı
+```
+Başlangıç (0s) → 5s bekleme (start-period)
+                    ↓
+                Her 30s (interval)
+                    ↓
+           wget /health çağır
+                    ↓
+        ┌───────────┴───────────┐
+        ↓                       ↓
+    200 OK                   Timeout/Error
+    (Healthy)                (1. Fail)
+                                ↓
+                         Tekrar dene (30s sonra)
+                                ↓
+                         2. Fail → 3. Fail
+                                ↓
+                           UNHEALTHY!
+```
+
 ## 🔥 Yenilikler ve İyileştirmeler
 
 ### ✅ Düzeltilen Sorunlar
