@@ -187,10 +187,12 @@ func HandleScreenshot(c *gin.Context) {
 
 	time.Sleep(2 * time.Second)
 
-	img, err := page.Screenshot(true, &proto.PageCaptureScreenshot{
-		Format:  proto.PageCaptureScreenshotFormatJpeg,
-		Quality: 90,
-	})
+	quality := 90
+  img, err := page.Screenshot(true, &proto.PageCaptureScreenshot{
+      Format:  proto.PageCaptureScreenshotFormatJpeg,
+      Quality: &quality,
+  })
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ScreenshotResponse{
 			Success: false,
