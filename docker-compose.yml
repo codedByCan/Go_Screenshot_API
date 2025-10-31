@@ -1,17 +1,20 @@
 version: '3.8'
 
 services:
-  screenshot-api:
+  screenshot_apix:
     build: .
-    container_name: screenshot-api
+    container_name: screenshot_apix
     ports:
-      - "192.168.1.9:80:8080"
+      - "80:8080"  
     restart: unless-stopped
     environment:
       - GIN_MODE=release
     mem_limit: 1g
     mem_reservation: 512m
     cpus: 1.0
+    networks:
+      my-network:
+        ipv4_address: 192.168.1.9
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
       interval: 5m
@@ -20,3 +23,7 @@ services:
       start_period: 10s
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  my-network:
+    external: true
